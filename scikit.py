@@ -11,7 +11,6 @@ def load_data(data_path, vocab_size=14141):
         data: a matrix, i-th column is a vector representing tf_idf values of i-th document
         labels: a row vector, i-th element is the label of i-th document
     """
-
     data = []
     labels = []
 
@@ -41,7 +40,6 @@ def load_data(data_path, vocab_size=14141):
 
 def clustering_with_KMeans(data):
     """KMeans clustering using sklearn."""
-
     # use csr matrix to create a sparse matrix with efficient row slicing
     X = csr_matrix(data)
     print('=================')
@@ -64,7 +62,6 @@ def classifying_with_linear_SVMs(train_X, train_y, test_X, test_y):
         test_X, test_y: data used to test the classifier
 
     """
-
     classifier = LinearSVC(
         C=1.0, # penalty coeff
         tol=0.001, # tolerance for stopping criteria
