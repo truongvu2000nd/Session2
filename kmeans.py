@@ -17,9 +17,7 @@ class Member:
         the id group that d belongs to
     _doc_id : int
         the id of the file that contains d
-
     """
-
     def __init__(self, r_d, label=None, doc_id=None):
         self._r_d = r_d
         self._label = label
@@ -29,7 +27,6 @@ class Member:
 class Cluster:
     """
     A class used to represent a cluster
-
     -----
     Attributes
     -----
@@ -44,7 +41,6 @@ class Cluster:
     reset_member: clear all members of the cluster
     add_member(member): add member to the cluster
     """
-
     def __init__(self):
         self._centroid = None
         self._members = []
@@ -80,7 +76,6 @@ class Kmeans:
     Methods
     -----
     load_data(data_path): load data from data path
-
     random_init(seed_value): randomly initialize centroids
 
     compute_similarity(member, centroid): compute similarity between the member and centroid using rbf kernel
@@ -91,7 +86,6 @@ class Kmeans:
 
     compute_purity, compute_NMI: evaluate the clustering
     """
-
     # -------------------
     # Initialize clusters
     def __init__(self, num_clusters):
@@ -140,7 +134,6 @@ class Kmeans:
         """Initialize centroids
         Choose centroids randomly from data points.
         """
-
         random.seed(seed_value)
         self._E = []
         rand_indices = random.sample(range(len(self._data)), self._num_clusters)  # get random indices of data
@@ -153,7 +146,6 @@ class Kmeans:
 
     def compute_similarity(self, member, centroid, gamma=1):
         """Compute similarity between a member's tf_idfs and a centroid using RBF kernel."""
-
         rbf = np.exp(-gamma * (np.linalg.norm(member._r_d - centroid)))
         return rbf
 
@@ -164,14 +156,12 @@ class Kmeans:
         Returns:
             the value of the biggest similarity measure
         """
-
         best_fit_cluster = None
         max_similarity = -1
 
         # loop over clusters
         for cluster in self._clusters:
             similarity = self.compute_similarity(member, cluster._centroid)
-
             # select the cluster with higher similarity
             if similarity > max_similarity:
                 best_fit_cluster = cluster
@@ -182,7 +172,6 @@ class Kmeans:
 
     def update_centroid_of(self, cluster):
         """Update the centroid of the cluster."""
-
         member_r_ds = [member._r_d for member in cluster._members]
         aver_r_d = np.mean(member_r_ds, axis=0)
         sqrt_sum_sqr = np.sqrt(np.sum(aver_r_d ** 2))
@@ -199,7 +188,6 @@ class Kmeans:
         similarity:
             the increase in value of similarity measure < threshold
         """
-
         criteria = ['centroid', 'similarity', 'max_iters']
         assert criterion in criteria
 
@@ -233,14 +221,12 @@ class Kmeans:
         First initialize the centroids. Then repeat (select cluster for every data points -->
         update centroid of every clusters --> check the stopping condition)
         """
-
         # initialize centroids randomly
         self.random_init(seed_value)
 
         # continually update cluster until convergence
         self._iteration = 0
         while True:
-
             # reset cluster, retain only centroids
             for cluster in self._clusters:
                 cluster.reset_member()
@@ -290,7 +276,6 @@ class Kmeans:
 
 
 if __name__ == '__main__':
-
     # Initialize centroids 5 times and choose the one with highest purity or NMI.
     num_clusters = 20
     kmeans = Kmeans(num_clusters)
