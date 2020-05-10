@@ -100,9 +100,8 @@ class Kmeans:
     # Load data from data_path
     def load_data(self, data_path):
         def sparse_to_dense(sparse_r_d, vocab_size):
-            #
             r_d = [0.0 for _ in range(vocab_size)]
-            indices_tfidfs = sparse_r_d.split()
+            indices_tfidfs = sparse_r_d.split() 
 
             for index_tfidf in indices_tfidfs:
                 index = int(index_tfidf.split(":")[0])
@@ -138,7 +137,7 @@ class Kmeans:
         self._E = []
         rand_indices = random.sample(range(len(self._data)), self._num_clusters)  # get random indices of data
 
-        # assign centroids to these data points
+        # assign these data points to centroids
         for index, rand_index in enumerate(rand_indices):
             centroid = self._data[rand_index]._r_d
             self._clusters[index]._centroid = centroid
